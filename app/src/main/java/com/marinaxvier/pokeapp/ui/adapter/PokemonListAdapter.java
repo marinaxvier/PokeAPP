@@ -1,19 +1,24 @@
 package com.marinaxvier.pokeapp.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.marinaxvier.pokeapp.OnItemClickListener;
 import com.marinaxvier.pokeapp.R;
 import com.marinaxvier.pokeapp.model.PokemonList;
+import com.marinaxvier.pokeapp.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +27,8 @@ public class PokemonListAdapter extends RecyclerView.Adapter<ViewHolder> {
     private List<PokemonList> pokemonList = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
     private Context context;
+    private StringUtil stringUtil;
+
 
 
 
@@ -40,6 +47,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<ViewHolder> {
         Glide.with(context)
                 .load( "https://pokeres.bastionbot.org/images/pokemon/"+id+".png")
                 .centerCrop()
+                .apply(new RequestOptions().placeholder(R.drawable.animation))
                 .into(image);
 
     }
@@ -55,9 +63,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         PokemonList pokemon = pokemonList.get(position);
         holder.bind(pokemon, onItemClickListener);
-        String finalName = pokemon.getName().substring(0,1).toUpperCase() + pokemon.getName().substring(1);
-
-        holder.tvPokemonName.setText(finalName);
+        holder.tvPokemonName.setText(stringUtil.toProperCase(pokemon.getName()));
         loadImage(pokemon.getId(),holder.ivPokemonImage);
 
 
@@ -108,6 +114,7 @@ class ViewHolder extends RecyclerView.ViewHolder{
         @Override
         public void onClick(View v) {
             onItemClickListener.onItemClick(pokemonList, getAdapterPosition());
+
         }
     });
     }

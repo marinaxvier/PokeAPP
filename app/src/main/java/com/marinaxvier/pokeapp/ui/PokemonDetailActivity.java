@@ -5,12 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.marinaxvier.pokeapp.model.Pokemon;
 import com.marinaxvier.pokeapp.network.Retrofit;
+import com.marinaxvier.pokeapp.util.StringUtil;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,11 +28,13 @@ public class PokemonDetailActivity extends AppCompatActivity {
     private TextView  pokemonDetailHeight;
     private TextView  pokemonDetailWeight;
     private TextView  pokemonDetailAbilities;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pokemon_detail);
+
 
         initViews();
 
@@ -42,12 +48,14 @@ public class PokemonDetailActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        progressBar = (ProgressBar)findViewById(R.id.progressBar);
         pokemonDetailImage = findViewById(R.id.ivPokemonDetailImage);
         pokemonDetailName = findViewById(R.id.tvPokemonDetailName);
         pokemonDetailType = findViewById(R.id.tvPokemonDetailType);
         pokemonDetailHeight = findViewById(R.id.tvPokemonDetailHeighValue);
         pokemonDetailWeight = findViewById(R.id.tvPokemonDetailWeightValue);
         pokemonDetailAbilities = findViewById(R.id.tvPokemonDetailAbilitiesValue);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     private void loadPokemonDetail(int id){
@@ -71,12 +79,13 @@ public class PokemonDetailActivity extends AppCompatActivity {
     }
 
     private void inflatePokemonDetail(Pokemon pokemon){
-        pokemonDetailName.setText(pokemon.getName());
-        pokemonDetailType.setText(pokemon.getPokemonTypes());
+        pokemonDetailName.setText(StringUtil.toProperCase(pokemon.getName()));
+        pokemonDetailType.setText(StringUtil.toProperCase(pokemon.getPokemonTypes()));
         pokemonDetailHeight.setText(String.valueOf(pokemon.getHeight() + " dm"));
         pokemonDetailWeight.setText(String.valueOf(pokemon.getWeight()+" hg"));
         pokemonDetailAbilities.setText(pokemon.getPokemonAbilities());
         loadPokemonDetailImage(pokemon.getId(), pokemonDetailImage);
+        progressBar.setVisibility(View.GONE);
 
 
     }
@@ -85,6 +94,7 @@ public class PokemonDetailActivity extends AppCompatActivity {
         Glide.with(PokemonDetailActivity.this)
                 .load( "https://pokeres.bastionbot.org/images/pokemon/"+id+".png")
                 .fitCenter()
+                .apply(new RequestOptions().placeholder(R.drawable.animation))
                 .into(image);
     }
 }
