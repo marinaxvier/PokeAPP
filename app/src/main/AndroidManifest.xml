@@ -11,8 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PokemonDetailActivity"></activity>
-        <activity android:name=".PokemonListActivity">
+        <activity android:name=".ui.PokemonDetailActivity"></activity>
+        <activity android:name=".ui.PokemonListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

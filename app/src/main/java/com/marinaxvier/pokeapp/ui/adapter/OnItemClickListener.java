@@ -1,4 +1,4 @@
-package com.marinaxvier.pokeapp;
+package com.marinaxvier.pokeapp.ui.adapter;
 
 import com.marinaxvier.pokeapp.model.PokemonList;
 

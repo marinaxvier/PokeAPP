@@ -1,7 +1,8 @@
-package com.marinaxvier.pokeapp;
+package com.marinaxvier.pokeapp.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,9 +10,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.marinaxvier.pokeapp.R;
 import com.marinaxvier.pokeapp.model.Pokemon;
 import com.marinaxvier.pokeapp.network.Retrofit;
 import com.marinaxvier.pokeapp.util.StringUtil;
@@ -29,6 +32,8 @@ public class PokemonDetailActivity extends AppCompatActivity {
     private TextView  pokemonDetailWeight;
     private TextView  pokemonDetailAbilities;
     private ProgressBar progressBar;
+    private ImageView ivArrowBackPokemonDetail;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,14 @@ public class PokemonDetailActivity extends AppCompatActivity {
             loadPokemonDetail(idPoke);
         }
 
+        ivArrowBackPokemonDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
 
     }
 
@@ -55,6 +68,7 @@ public class PokemonDetailActivity extends AppCompatActivity {
         pokemonDetailHeight = findViewById(R.id.tvPokemonDetailHeighValue);
         pokemonDetailWeight = findViewById(R.id.tvPokemonDetailWeightValue);
         pokemonDetailAbilities = findViewById(R.id.tvPokemonDetailAbilitiesValue);
+        ivArrowBackPokemonDetail = findViewById(R.id.ivArrowBack);
         progressBar.setVisibility(View.VISIBLE);
     }
 

@@ -1,5 +1,7 @@
 package com.marinaxvier.pokeapp.model;
 
+import com.marinaxvier.pokeapp.util.StringUtil;
+
 import java.util.List;
 
 public class Pokemon {
@@ -12,6 +14,7 @@ public class Pokemon {
     private List<Abilities> abilities;
     private String pokemonAbilities = "";
     private String pokemonTypes = "";
+    private StringUtil stringUtil;
 
     public String getPokemonTypes() {
 //
@@ -37,7 +40,7 @@ public class Pokemon {
     public String getPokemonAbilities() {
 
         for (Abilities a: getAbilities()) {
-            pokemonAbilities += a.getAbility().getName() + "\n";
+            pokemonAbilities += stringUtil.toProperCase(a.getAbility().getName()) + "\n";
         }
 
         return pokemonAbilities;

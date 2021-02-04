@@ -1,21 +1,17 @@
-package com.marinaxvier.pokeapp.adapter;
+package com.marinaxvier.pokeapp.ui.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.marinaxvier.pokeapp.OnItemClickListener;
 import com.marinaxvier.pokeapp.R;
 import com.marinaxvier.pokeapp.model.PokemonList;
 import com.marinaxvier.pokeapp.util.StringUtil;
@@ -90,7 +86,6 @@ public class PokemonListAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
     public void updateList(List<PokemonList> list){
-        pokemonList.clear();
         pokemonList.addAll(list);
         notifyDataSetChanged();
     }

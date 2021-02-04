@@ -1,6 +1,5 @@
-package com.marinaxvier.pokeapp;
+package com.marinaxvier.pokeapp.ui;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,11 +7,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.marinaxvier.pokeapp.adapter.PokemonListAdapter;
+import com.marinaxvier.pokeapp.ui.adapter.OnItemClickListener;
+import com.marinaxvier.pokeapp.R;
+import com.marinaxvier.pokeapp.ui.adapter.PokemonListAdapter;
 import com.marinaxvier.pokeapp.model.PokemonList;
 import com.marinaxvier.pokeapp.model.PokemonReturn;
 import com.marinaxvier.pokeapp.network.Retrofit;
@@ -28,6 +26,7 @@ public class PokemonListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private PokemonListAdapter adapter;
     private List<PokemonList> pokemonList = new ArrayList<>();
+    private int offset = 0;
 
 
     @Override
@@ -45,16 +44,26 @@ public class PokemonListActivity extends AppCompatActivity {
                 startActivity(startPokemonDetailPage);
             }
         });
-                recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
+
+        recyclerView.addOnScrollListener(new OnScrollListener() {
+            @Override
+            public void update() {
+                super.update();
+                offset += 20;
+                loadData();
+            }
+        });
+
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
         recyclerView.setLayoutManager(gridLayoutManager);
 
 
-
     }
 
+
     private void loadData() {
-        Call<PokemonReturn> call = new Retrofit().getService().getPokemon();
+        Call<PokemonReturn> call = new Retrofit().getService().getPokemon(20, offset);
         call.enqueue(new Callback<PokemonReturn>() {
 
             @Override
